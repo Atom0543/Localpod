@@ -1,15 +1,37 @@
 # LocalPod
 
-แอปเล่นเพลงเฉพาะไฟล์ในเครื่อง (Android, Kotlin + Jetpack Compose + Media3)
+แอปเล่นเพลงออฟไลน์บน Android เล่นเฉพาะไฟล์เพลงในเครื่อง ไม่ต้องมีบัญชี ไม่มีสตรีมมิ่ง มีโหมด iPod (เมนู + วงล้อ) ให้ใช้ด้วย
 
-## เปิดโปรเจกต์
-1. Android Studio > File > Open > เลือกโฟลเดอร์ `LocalPod`
-2. รอ Gradle sync (ครั้งแรกจะโหลดของนานหน่อย) ถ้า Studio เสนอให้อัปเกรด AGP/Kotlin กดตกลงได้
+Kotlin · Jetpack Compose · Media3 · Android 8.0+ (API 26)
+
+## ฟีเจอร์
+- **สองโหมด**: หน้ารายการเพลงปกติ กับโหมด iPod ที่ใช้วงล้อ (click wheel) และเมนู
+- **ซ่อนไฟล์ที่ไม่ใช่เพลง** ได้ ไฟล์จริงไม่ถูกลบ
+- **เล่นเบื้องหลัง** และมีปุ่มควบคุมบน notification
+- **วิดเจ็ตหน้าจอโฮม** มีสองขนาด
+- **ภาพปกอัลบั้ม** ดึงจากไฟล์เพลง และครอปภาพปกเองได้
+- **จัดชื่อเพลง**: ล้างคำขยะในชื่อ (Official MV, 320kbps ฯลฯ) และแยกชื่อศิลปินออกจากชื่อเพลง ถ้าสั่งเอง แอปจะเทียบชื่อกับ Deezer ทางอินเทอร์เน็ต (ใช้เน็ตเฉพาะตอนนี้)
+- **ธีมสว่าง/มืด** ตามระบบ หรือสลับเองได้
+
+## Build
+1. Android Studio > File > Open > เลือกโฟลเดอร์นี้
+2. รอ Gradle sync
 3. ต่อมือถือ (เปิด USB debugging) แล้วกด Run
-4. ได้ไฟล์ APK: Build > Build App Bundle(s) / APK(s) > Build APK(s)
+4. ถ้าต้องการไฟล์ APK: Build > Build App Bundle(s) / APK(s) > Build APK(s)
 
-## ไฟล์
-- `Library.kt` สแกนเพลง + เก็บรายการที่ซ่อน (ไม่ลบไฟล์จริง)
-- `PlaybackService.kt` เล่นเพลงเบื้องหลัง + ปุ่มบน notification
-- `App.kt` โหมดปกติ, หน้าที่ซ่อนไว้, ปัดสลับหน้า
-- `Ipod.kt` โหมด iPod: เมนู + วงล้อ (`stepDegrees` = ความไวของวงล้อ)
+ต้องใช้ JDK 17
+
+## โครงสร้างไฟล์
+อยู่ใน `app/src/main/java/com/sophonat/localpod/`
+- `MainActivity.kt` จุดเริ่มแอป ขอสิทธิ์ และเชื่อมต่อ player
+- `Library.kt` สแกนเพลง และเก็บรายการที่ซ่อนไว้
+- `PlaybackService.kt` เล่นเพลงเบื้องหลัง และปุ่มบน notification
+- `App.kt` โหมดปกติ หน้าที่ซ่อนไว้ ปัดเพื่อสลับหน้า
+- `Ipod.kt` โหมด iPod: เมนูกับวงล้อ (`stepDegrees` คือความไวของวงล้อ)
+- `Tidy.kt` จัดชื่อเพลงและศิลปิน
+- `Cover.kt`, `Crop.kt` ภาพปก และหน้าครอปภาพ
+- `Widget.kt` วิดเจ็ตหน้าจอโฮม
+- `Theme.kt` สีและธีม
+
+## License
+[MIT](LICENSE)
